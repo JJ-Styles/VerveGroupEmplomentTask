@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace VerveGroupTask.Web.Services
 {
-    interface IGithubService
+    public interface IGithubService
     {
         Task<UserDTO> GetUser(string user);
         Task<IEnumerable<RepoDTO>> GetRepos(string Login);
