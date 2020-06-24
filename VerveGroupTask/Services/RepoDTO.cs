@@ -1,4 +1,6 @@
-﻿namespace VerveGroupTask.Web.Services
+﻿using System.Collections.Generic;
+
+namespace VerveGroupTask.Web.Services
 {
     public class RepoDTO
     { 
@@ -9,5 +11,6 @@
         public string SVN_Url { get; set; }
         public int UserId { get; set; }
         public UserDTO Owner { get; set; }
+        public IEnumerable<StargazerDTo> Stargazers { get; set;}
     }
 }

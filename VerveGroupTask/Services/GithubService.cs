@@ -29,7 +29,7 @@ namespace VerveGroupTask.Web.Services
         public async Task<IEnumerable<RepoDTO>> GetRepos(string Login)
         {
             var response = await GetClient().GetAsync("users/"+ Login.ToLower() + "/repos");
-            if (response.StatusCode == HttpStatusCode.NotFound)
+            if (!response.IsSuccessStatusCode)
             {
                 return null;
             }
@@ -41,7 +41,7 @@ namespace VerveGroupTask.Web.Services
         public async Task<IEnumerable<StargazerDTo>> GetStargazers(string RepoFullName)
         {
             var response = await GetClient().GetAsync("repos/" + RepoFullName.ToLower() + "/stargazers");
-            if (response.StatusCode == HttpStatusCode.NotFound)
+            if (!response.IsSuccessStatusCode)
             {
                 return null;
             }
@@ -53,7 +53,7 @@ namespace VerveGroupTask.Web.Services
         public async Task<UserDTO> GetUser(string user)
         {
             var response = await GetClient().GetAsync("users/" + user);
-            if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.Forbidden)
+            if (!response.IsSuccessStatusCode)
             {
                 return null;
             }
