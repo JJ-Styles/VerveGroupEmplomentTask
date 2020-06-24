@@ -1,0 +1,13 @@
+﻿@model VerveGroupTask.Web.Services.UserDTO
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Search User</h1>
+
+@using (Html.BeginForm("GetUser", "User", FormMethod.Post))
+{
+    @Html.TextBoxFor(x => x.Name)
+    <button type="submit">Search</button>
+}

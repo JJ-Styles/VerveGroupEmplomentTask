@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Polly;
+using VerveGroupTask.Web.Services;
 
 namespace VerveGroupTask
 {
@@ -35,6 +36,8 @@ namespace VerveGroupTask
                     .AddTransientHttpErrorPolicy(prop =>
                         prop.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
             services.AddControllersWithViews();
+
+            services.AddTransient<IGithubService, GithubService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
