@@ -24,7 +24,7 @@ namespace VerveGroupTask.Web.Controllers
 
         public async Task<IActionResult> GetUser(User user)
         {
-            if (user == null || user.Name.Equals(""))
+            if (user == null)
             {
                 return NotFound();
             }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerveGroupTask.Web", "Verve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerveGroupTask.Data", "VerveGroupTask.Data\VerveGroupTask.Data.csproj", "{F31E098A-7A3C-4E42-92DB-A35FD71C05B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerveGroupTask.Tests", "VerveGroupTaskTests\VerveGroupTask.Tests.csproj", "{9E76B014-D555-42A4-BF1F-3747F9AC8A1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F31E098A-7A3C-4E42-92DB-A35FD71C05B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F31E098A-7A3C-4E42-92DB-A35FD71C05B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F31E098A-7A3C-4E42-92DB-A35FD71C05B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E76B014-D555-42A4-BF1F-3747F9AC8A1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E76B014-D555-42A4-BF1F-3747F9AC8A1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E76B014-D555-42A4-BF1F-3747F9AC8A1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E76B014-D555-42A4-BF1F-3747F9AC8A1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
