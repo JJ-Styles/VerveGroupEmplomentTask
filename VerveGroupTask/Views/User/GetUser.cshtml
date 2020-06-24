@@ -35,7 +35,7 @@
             @Html.DisplayNameFor(model => model.First().Owner.Avatar_Url)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.First().Owner.Avatar_Url)
+            <a href=model.First().Owner.Avatar_Url>@Html.DisplayFor(model => model.First().Owner.Avatar_Url)</a>
         </dd>
     </dl>
 </div>
@@ -61,7 +61,7 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelitem => item.Name)
+                <a href=@item.SVN_Url>@Html.DisplayFor(modelitem => item.Name)</a>
             </td>
             <td>
                 @Html.DisplayFor(modelitem => item.Full_Name)
