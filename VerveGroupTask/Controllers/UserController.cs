@@ -40,6 +40,7 @@ namespace VerveGroupTask.Web.Controllers
             repos.ToList();
             foreach (RepoDTO repo in repos)
             {
+                repo.Stargazers = await _githubService.GetStargazers(repo.Full_Name); 
                 repo.Owner = userAccount;
             }
             repos = repos.OrderByDescending(x => x.Stargazers_Count);

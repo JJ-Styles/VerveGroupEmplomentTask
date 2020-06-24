@@ -51,22 +51,31 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stargazers)
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelitem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelitem => item.Full_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelitem => item.Description)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelitem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.Full_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.Description)
+            </td>
+            <td>
+                @foreach(var stargazer in item.Stargazers)
+                {
+                    @Html.DisplayFor(modelitem => stargazer.Login)<br />
+                }
+            </td>
+        </tr>
         }
     </tbody>
 </table>
