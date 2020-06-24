@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace VerveGroupTask.Web.Services
+{
+    interface IGithubService
+    {
+        Task<UserDTO> GetUser(string user);
+        Task<IEnumerable<RepoDTO>> GetRepos(string Login);
+        Task<IEnumerable<StargazerDTo>> GetStargazers(string RepoFullName);
+    }
+}
