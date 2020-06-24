@@ -32,9 +32,9 @@ namespace VerveGroupTask
             services.AddHttpClient("RetryAndBreak")
                     .AddTransientHttpErrorPolicy(p =>
                         p.OrResult(msg => msg.StatusCode == HttpStatusCode.NotFound)
-                         .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))))
+                         .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(3, retryAttempt))))
                     .AddTransientHttpErrorPolicy(prop =>
-                        prop.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+                        prop.CircuitBreakerAsync(5, TimeSpan.FromSeconds(60)));
             services.AddControllersWithViews();
 
             services.AddTransient<IGithubService, GithubService>();
