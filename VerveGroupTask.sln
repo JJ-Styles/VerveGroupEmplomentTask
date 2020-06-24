@@ -3,11 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerveGroupTask.Web", "VerveGroupTask\VerveGroupTask.Web.csproj", "{69C99C8A-E859-448F-941C-FDF64EC04759}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VerveGroupTask.Web", "VerveGroupTask\VerveGroupTask.Web.csproj", "{69C99C8A-E859-448F-941C-FDF64EC04759}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerveGroupTask.Data", "VerveGroupTask.Data\VerveGroupTask.Data.csproj", "{F31E098A-7A3C-4E42-92DB-A35FD71C05B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VerveGroupTask.Data", "VerveGroupTask.Data\VerveGroupTask.Data.csproj", "{F31E098A-7A3C-4E42-92DB-A35FD71C05B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerveGroupTask.Tests", "VerveGroupTaskTests\VerveGroupTask.Tests.csproj", "{9E76B014-D555-42A4-BF1F-3747F9AC8A1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VerveGroupTask.Tests", "VerveGroupTaskTests\VerveGroupTask.Tests.csproj", "{9E76B014-D555-42A4-BF1F-3747F9AC8A1F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F31E098A-7A3C-4E42-92DB-A35FD71C05B1} = {F31E098A-7A3C-4E42-92DB-A35FD71C05B1}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

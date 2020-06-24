@@ -3,6 +3,8 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using VerveGroupTask.Models;
 using VerveGroupTask.Web.Controllers;
 using VerveGroupTask.Web.Services;
 using Xunit;
@@ -25,6 +27,14 @@ namespace VerveGroupTask.Tests
         {
             var result = _controller.Index();
             Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
+        public void GetUser_ActionExecutes_ReturnsViewForGetUser()
+        {
+            User user = new User { Name="robconery" };
+            var result = _controller.GetUser(user);
+            Assert.IsType<Task<IActionResult>>(result);
         }
     }
 }
