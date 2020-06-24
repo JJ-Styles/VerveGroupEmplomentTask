@@ -21,6 +21,15 @@ namespace VerveGroupTask.Web.Services
             _client = client;
         }
 
+        public  GithubService(HttpClient client)
+        {
+            client.BaseAddress = new Uri("https://api.github.com/");
+            client.Timeout = TimeSpan.FromSeconds(5);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            client.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
+            _client = client;
+        }
+
         public HttpClient GetClient()
         {
             return _client;
@@ -38,7 +47,7 @@ namespace VerveGroupTask.Web.Services
             return repoDTOs;
         }
 
-        public async Task<IEnumerable<StargazerDTo>> GetStargazers(string RepoFullName)
+        public async Task<IEnumerable<StargazerDTO>> GetStargazers(string RepoFullName)
         {
             var response = await GetClient().GetAsync("repos/" + RepoFullName.ToLower() + "/stargazers");
             if (!response.IsSuccessStatusCode)
@@ -46,8 +55,8 @@ namespace VerveGroupTask.Web.Services
                 return null;
             }
             response.EnsureSuccessStatusCode();
-            IEnumerable<StargazerDTo> stargazerDTos = await response.Content.ReadAsAsync<IEnumerable<StargazerDTo>>();
-            return stargazerDTos;
+            IEnumerable<StargazerDTO> stargazerDTOs = await response.Content.ReadAsAsync<IEnumerable<StargazerDTO>>();
+            return stargazerDTOs;
         }
 
         public async Task<UserDTO> GetUser(string user)

@@ -11,6 +11,6 @@ namespace VerveGroupTask.Web.Services
         public string SVN_Url { get; set; }
         public int UserId { get; set; }
         public UserDTO Owner { get; set; }
-        public IEnumerable<StargazerDTo> Stargazers { get; set;}
+        public IEnumerable<StargazerDTO> Stargazers { get; set;}
     }
 }

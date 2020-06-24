@@ -9,6 +9,6 @@ namespace VerveGroupTask.Web.Services
     {
         Task<UserDTO> GetUser(string user);
         Task<IEnumerable<RepoDTO>> GetRepos(string Login);
-        Task<IEnumerable<StargazerDTo>> GetStargazers(string RepoFullName);
+        Task<IEnumerable<StargazerDTO>> GetStargazers(string RepoFullName);
     }
 }

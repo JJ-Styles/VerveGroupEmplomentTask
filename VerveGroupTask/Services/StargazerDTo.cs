@@ -1,6 +1,6 @@
 ﻿namespace VerveGroupTask.Web.Services
 {
-    public class StargazerDTo
+    public class StargazerDTO
     {
         public string Login { get; set; }
     }
