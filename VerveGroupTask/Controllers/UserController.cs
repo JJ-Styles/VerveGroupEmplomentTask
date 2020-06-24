@@ -29,14 +29,23 @@ namespace VerveGroupTask.Web.Controllers
                 return NotFound();
             }
 
-            var userAccount = _githubService.GetUser(user.Name);
+            var userAccount = await _githubService.GetUser(user.Name);
+            var repos = await _githubService.GetRepos(user.Name);
 
-            if (userAccount == null)
+            if (userAccount == null || repos == null)
             {
                 return NotFound();
             }
 
-            return View(await userAccount);
+            repos.ToList();
+            foreach (RepoDTO repo in repos)
+            {
+                repo.Owner = userAccount;
+            }
+            repos = repos.OrderByDescending(x => x.Stargazers_Count);
+            repos = repos.Take(5);
+
+            return View(repos);
         }
     }
 }

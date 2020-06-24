@@ -7,7 +7,6 @@ namespace VerveGroupTask.Web.Services
 {
     public class UserDTO
     {
-        public int ID { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
         public string Avatar_Url { get; set; }
