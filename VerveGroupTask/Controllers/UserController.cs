@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using VerveGroupTask.Models;
 using VerveGroupTask.Web.Services;
 
 namespace VerveGroupTask.Web.Controllers
@@ -21,14 +22,14 @@ namespace VerveGroupTask.Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> GetUser(string user)
+        public async Task<IActionResult> GetUser(User user)
         {
-            if (user == null || user.Equals(""))
+            if (user == null || user.Name.Equals(""))
             {
                 return NotFound();
             }
 
-            var userAccount = _githubService.GetUser(user);
+            var userAccount = _githubService.GetUser(user.Name);
 
             if (userAccount == null)
             {

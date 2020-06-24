@@ -10,6 +10,7 @@ namespace VerveGroupTask.Web.Services
         public int ID { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
-        public string Avatar { get; set; }
+        public string Avatar_Url { get; set; }
+        public string Repos_Url { get; set; }
     }
 }

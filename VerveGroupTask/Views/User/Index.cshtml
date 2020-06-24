@@ -9,5 +9,6 @@
 @using (Html.BeginForm("GetUser", "User", FormMethod.Post))
 {
     @Html.TextBoxFor(x => x.Name)
+    @Html.ValidationMessageFor(model => model.Name)
     <button type="submit">Search</button>
 }

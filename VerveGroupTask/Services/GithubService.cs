@@ -17,6 +17,7 @@ namespace VerveGroupTask.Web.Services
             client.BaseAddress = new Uri("https://api.github.com/");
             client.Timeout = TimeSpan.FromSeconds(5);
             client.DefaultRequestHeaders.Add("Accept", "application/json");
+            client.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
             _client = client;
         }
 
@@ -52,7 +53,7 @@ namespace VerveGroupTask.Web.Services
         public async Task<UserDTO> GetUser(string user)
         {
             var response = await GetClient().GetAsync("users/" + user);
-            if (response.StatusCode == HttpStatusCode.NotFound)
+            if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.Forbidden)
             {
                 return null;
             }
