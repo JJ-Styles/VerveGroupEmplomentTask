@@ -1,0 +1,37 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- script: cd VerveGroupTest && dotnet build --configuration $(buildConfiguration)
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    zipAfterPublish: true
+    arguments: '--configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Free Trial(#subscription Token)'
+    appType: 'webApp'
+    appName: 'VerveGroupTask'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
