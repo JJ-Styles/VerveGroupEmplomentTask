@@ -25,12 +25,14 @@ namespace StaffApp.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>(x =>
+            {
                  x.Property(u => u.Avatar_Url).IsRequired();
                  x.Property(u => u.Location).IsRequired();
                  x.Property(u => u.Name).IsRequired();
-            );
+            });
 
             modelBuilder.Entity<Repos>(x =>
+            {
                  x.Property(r => r.svn_Url).IsRequired();
                  x.Property(r => r.Name).IsRequired();
                  x.Property(r => r.Full_Name).IsRequired();
@@ -39,4 +41,15 @@ namespace StaffApp.Data
                  x.Property(r => r.User).WithMany()
                                         .HasForeignKey(r => r.UserId)
                                         .IsRequired();
-            );
+            });
+
+            modelBuilder.Entity<Stargazer>(x =>
+            {
+                 x.Property(s => s.Login).IsRequired();
+                 x.Property(s => s.Repo).WithMany()
+                                        .HasForeignKey(s => s.RepoId)
+                                        .IsRequired();
+            });
+        }
+    }
+}
