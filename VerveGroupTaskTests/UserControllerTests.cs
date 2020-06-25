@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Moq;
+using StaffApp.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,8 @@ namespace VerveGroupTask.Tests
         public UserControllerTests()
         {
             _mockRepo = new Mock<IGithubService>();
-            _controller = new UserController(_mockRepo.Object);
+            InMemoryDbContextFactory inMemoryDbContext = new InMemoryDbContextFactory();
+            _controller = new UserController(_mockRepo.Object, inMemoryDbContext.GetTempDB());
         }
 
         [Fact]
