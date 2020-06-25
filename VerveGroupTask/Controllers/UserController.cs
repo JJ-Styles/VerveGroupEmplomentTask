@@ -11,10 +11,13 @@ namespace VerveGroupTask.Web.Controllers
     public class UserController : Controller
     {
         private readonly IGithubService _githubService;
+        private readonly TempDB _context
 
-        public UserController(IGithubService githubService)
+        public UserController(IGithubService githubService
+                              TempDB context)
         {
             _githubService = githubService;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -49,6 +52,21 @@ namespace VerveGroupTask.Web.Controllers
             {
                 repo.Stargazers = await _githubService.GetStargazers(repo.Full_Name);
             }
+
+            try
+                {
+//values need to be changed to data classes to be saved
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    _context.Add(repo);
+                    await _context.SaveChangesAsync();
+                    _context.Add(stargazers);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                     Console.Log(e);
+                }
 
             return View(repos);
         }
