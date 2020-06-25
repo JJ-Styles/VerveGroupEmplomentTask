@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using StaffApp.Data;
 using VerveGroupTask.Models;
 using VerveGroupTask.Web.Services;
 
@@ -11,9 +13,9 @@ namespace VerveGroupTask.Web.Controllers
     public class UserController : Controller
     {
         private readonly IGithubService _githubService;
-        private readonly TempDB _context
+        private readonly TempDB _context;
 
-        public UserController(IGithubService githubService
+        public UserController(IGithubService githubService,
                               TempDB context)
         {
             _githubService = githubService;
@@ -54,21 +56,59 @@ namespace VerveGroupTask.Web.Controllers
             }
 
             try
+            {
+                var userDb = new User
                 {
-//values need to be changed to data classes to be saved
-                    _context.Add(user);
-                    await _context.SaveChangesAsync();
-                    _context.Add(repo);
-                    await _context.SaveChangesAsync();
-                    _context.Add(stargazers);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException e)
+                    Login = user.Name,
+                    Name = userAccount.Name,
+                    Location = userAccount.Location,
+                    Avatar_Url = userAccount.Avatar_Url
+                };
+
+                foreach (RepoDTO repo in repos)
                 {
-                     Console.Log(e);
+                    if (!RepoExists(repo.Full_Name))
+                    {
+                        _context.Add(new Repos { Full_Name = repo.Full_Name, Description = repo.Description, Name = repo.Name, Stargazers_Count = repo.Stargazers_Count, Svn_Url = repo.SVN_Url, UserLogin = user.Name });
+                        await _context.SaveChangesAsync();
+
+                        var last = await _context.Repos.LastAsync();
+
+                        foreach (StargazerDTO stargazer in repo.Stargazers)
+                        {
+                            _context.Add(new Stargazers { Login = stargazer.Login, RepoID = last.ID });
+                        }
+                        await _context.SaveChangesAsync();
+                    }
                 }
 
+                if (!UserExists(userDb.Login))
+                {
+                    _context.Add(userDb);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                    Console.Out.WriteLine(e);
+            }
+
             return View(repos);
+        }
+
+        private bool UserExists(string login)
+        {
+            return _context.Users.Any(e => e.Login == login);
+        }
+
+        private bool RepoExists(string fullname)
+        {
+            return _context.Repos.Any(e => e.Full_Name == fullname);
+        }
+
+        private bool StargazerExists(string login)
+        {
+            return _context.Stargazers.Any(e => e.Login == login);
         }
     }
 }
