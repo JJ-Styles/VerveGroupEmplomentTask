@@ -9,6 +9,8 @@ Display the results below the search box. The results should show the username, 
 and the 5 repositories with the highest stargazer_count. For each repository, show the Name, Full
 Name, Description and Stargazers. The Name should have a link to the repository.
 
+Solution written in Visual Studio.
+
 ## Technology & Tools
 *	Polly 3.1.1
 *	Asp.net Core 3.0
