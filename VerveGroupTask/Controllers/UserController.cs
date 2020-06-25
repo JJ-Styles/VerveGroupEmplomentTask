@@ -24,40 +24,40 @@ namespace VerveGroupTask.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(); //Default View With Search Box
         }
 
         public async Task<IActionResult> GetUser(User user)
         {
-            if (user == null)
+            if (user == null) //Stop searching a null user
             {
                 return NotFound();
             }
 
-            var userAccount = await _githubService.GetUser(user.Name);
-            var repos = await _githubService.GetRepos(user.Name);
+            var userAccount = await _githubService.GetUser(user.Name); //gets the User from the APi
+            var repos = await _githubService.GetRepos(user.Name); //gets the Repo from the Api
 
-            if (userAccount == null || repos == null)
+            if (userAccount == null || repos == null) //Checks that neither of the Api calls gave null values
             {
                 return NotFound();
             }
 
-            repos.ToList();
+            repos.ToList(); //Turn the repos into a list to be iterated through
             foreach (RepoDTO repo in repos)
             {
-                repo.Owner = userAccount;
+                repo.Owner = userAccount; //sets the user for each repo
             }
-            repos = repos.OrderByDescending(x => x.Stargazers_Count);
-            repos = repos.Take(5);
+            repos = repos.OrderByDescending(x => x.Stargazers_Count); //Orders the Repos so the first repo has the highest Stargazers count
+            repos = repos.Take(5); //Makes the List only contain the highest 5 stargazers count
 
             foreach (RepoDTO repo in repos)
             {
-                repo.Stargazers = await _githubService.GetStargazers(repo.Full_Name);
+                repo.Stargazers = await _githubService.GetStargazers(repo.Full_Name); //Gets the stargazers for each of the repos
             }
 
             try
             {
-                var userDb = new User
+                var userDb = new User  //creates a user object from the data from api and user
                 {
                     Login = user.Name,
                     Name = userAccount.Name,
@@ -67,14 +67,16 @@ namespace VerveGroupTask.Web.Controllers
 
                 foreach (RepoDTO repo in repos)
                 {
+                    //Checks repo does not exist as there is no need for a temp save of the data if it already exists.
                     if (!RepoExists(repo.Full_Name))
                     {
+                        //adds each repo to the Db in case the app cannot make a successful connection
                         _context.Add(new Repos { Full_Name = repo.Full_Name, Description = repo.Description, Name = repo.Name, Stargazers_Count = repo.Stargazers_Count, Svn_Url = repo.SVN_Url, UserLogin = user.Name });
                         await _context.SaveChangesAsync();
 
-                        var last = await _context.Repos.LastAsync();
+                        var last = await _context.Repos.LastAsync(); //gets the last id from the repos
 
-                        foreach (StargazerDTO stargazer in repo.Stargazers)
+                        foreach (StargazerDTO stargazer in repo.Stargazers) // Saves the stargazers to the Db
                         {
                             _context.Add(new Stargazers { Login = stargazer.Login, RepoID = last.ID });
                         }
@@ -82,9 +84,9 @@ namespace VerveGroupTask.Web.Controllers
                     }
                 }
 
-                if (!UserExists(userDb.Login))
+                if (!UserExists(userDb.Login)) // checks if the user exists in the Db already
                 {
-                    _context.Add(userDb);
+                    _context.Add(userDb); //Adds the user to the Db incase of an unsuccessful api connection
                     await _context.SaveChangesAsync();
                 }
             }
@@ -93,22 +95,19 @@ namespace VerveGroupTask.Web.Controllers
                     Console.Out.WriteLine(e);
             }
 
-            return View(repos);
+            return View(repos); //sends a RepoDTO to the view which has a link to both user and stargazer
         }
 
+        //checks whether a user exists
         private bool UserExists(string login)
         {
             return _context.Users.Any(e => e.Login == login);
         }
 
+        //checks whether a Repo exists
         private bool RepoExists(string fullname)
         {
             return _context.Repos.Any(e => e.Full_Name == fullname);
-        }
-
-        private bool StargazerExists(string login)
-        {
-            return _context.Stargazers.Any(e => e.Login == login);
         }
     }
 }
