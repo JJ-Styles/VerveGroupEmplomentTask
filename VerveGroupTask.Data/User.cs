@@ -7,9 +7,9 @@ namespace VerveGroupTask.Models
 {
     public class User
     {
-        public int ID { get; set; }
+        public string Login { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
-        public string Avatar { get; set; }
+        public string Avatar_Url { get; set; }
     }
 }

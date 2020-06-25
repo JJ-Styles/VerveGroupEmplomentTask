@@ -9,11 +9,11 @@ namespace VerveGroupTask.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public string Fullname { get; set; }
+        public string Full_Name { get; set; }
         public string Description { get; set; }
-        public int StargazersCount { get; set; }
-        public string Url { get; set; }
-        public int UserId { get; set; }
+        public int Stargazers_Count { get; set; }
+        public string Svn_Url { get; set; }
+        public string UserLogin { get; set; }
         public User Owner { get; set; }
     }
 }

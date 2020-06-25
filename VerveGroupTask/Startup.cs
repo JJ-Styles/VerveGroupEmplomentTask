@@ -5,11 +5,14 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Polly;
+using StaffApp.Data;
 using VerveGroupTask.Web.Services;
 
 namespace VerveGroupTask
@@ -29,6 +32,20 @@ namespace VerveGroupTask
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.AddDbContext<TempDB>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("StoreConnection"), optionsBuilder =>
+                {
+                    optionsBuilder.EnableRetryOnFailure(3, TimeSpan.FromSeconds(10), null);
+                }
+             ));
+
             services.AddHttpClient("RetryAndBreak")
                     .AddTransientHttpErrorPolicy(p =>
                         p.OrResult(msg => msg.StatusCode == HttpStatusCode.NotFound)

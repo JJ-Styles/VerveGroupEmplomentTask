@@ -2,16 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using VerveGroupTask.Models;
 
 namespace StaffApp.Data
 {
     public class TempDB : DbContext
     {
-        public DBSet<User> Users {get; set;}
-        public DBSet<Repos> Repos {get; set;}
-        public DBSet<Stargazers> Stargazers {get; set;}
+        public DbSet<User> Users {get; set;}
+        public DbSet<Repos> Repos {get; set;}
+        public DbSet<Stargazers> Stargazers {get; set;}
         
-        public TempDb(DbContextOptions<TempDb> options) : base(options)
+        public TempDB(DbContextOptions<TempDB> options) : base(options)
         {
         }
 
@@ -26,29 +27,30 @@ namespace StaffApp.Data
 
             modelBuilder.Entity<User>(x =>
             {
-                 x.Property(u => u.Avatar_Url).IsRequired();
-                 x.Property(u => u.Location).IsRequired();
-                 x.Property(u => u.Name).IsRequired();
+                x.Property(u => u.Avatar_Url).IsRequired();
+                x.Property(u => u.Location).IsRequired();
+                x.Property(u => u.Name).IsRequired();
+                x.HasKey(u => u.Login);
             });
 
             modelBuilder.Entity<Repos>(x =>
             {
-                 x.Property(r => r.svn_Url).IsRequired();
-                 x.Property(r => r.Name).IsRequired();
-                 x.Property(r => r.Full_Name).IsRequired();
-                 x.Property(r => r.Repo_Url).IsRequired();
-                 x.Property(r => r.Description).IsRequired();
-                 x.Property(r => r.User).WithMany()
-                                        .HasForeignKey(r => r.UserId)
-                                        .IsRequired();
+                x.Property(r => r.Svn_Url).IsRequired();
+                x.Property(r => r.Name).IsRequired();
+                x.Property(r => r.Full_Name).IsRequired();
+                x.Property(r => r.Description).IsRequired();
+                x.HasOne(r => r.Owner).WithMany()
+                                      .HasForeignKey(r => r.UserLogin)
+                                      .IsRequired();
             });
 
-            modelBuilder.Entity<Stargazer>(x =>
+            modelBuilder.Entity<Stargazers>(x =>
             {
-                 x.Property(s => s.Login).IsRequired();
-                 x.Property(s => s.Repo).WithMany()
-                                        .HasForeignKey(s => s.RepoId)
-                                        .IsRequired();
+                x.Property(s => s.Login).IsRequired();
+                x.HasKey(s => s.Login);
+                x.HasOne(s => s.Repo).WithMany()
+                                     .HasForeignKey(s => s.RepoID)
+                                     .IsRequired();
             });
         }
     }

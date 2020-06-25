@@ -7,8 +7,7 @@ namespace VerveGroupTask.Models
 {
     public class Stargazers
     {
-        public int ID { get; set; }
-        public string Username { get; set; }
+        public string Login { get; set; }
         public int RepoID { get; set; }
         public Repos Repo { get; set; }
     }
