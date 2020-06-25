@@ -8,3 +8,21 @@ api connection.<br>
 Display the results below the search box. The results should show the username, location, avatar
 and the 5 repositories with the highest stargazer_count. For each repository, show the Name, Full
 Name, Description and Stargazers. The Name should have a link to the repository.
+
+## Technology & Tools
+*	Polly 3.1.1
+*	Asp.net Core 3.0
+*	Entity Framework core 3.1.1
+*	SQL Server 3.1.1 
+*	Version Control (Git)
+*	Moq 4.13.1
+* Xunit 2.4.1
+* Xunit Runner 2.4.1 <br/>
+## Patterns
+*	Retry Pattern  
+*	Circuit-Breaker Pattern <br/>
+## Security
+* HTTPS <br/>
+## Features
+* Example .yml file for azure
+* Backup Database in case of unsuccessful Api calls
